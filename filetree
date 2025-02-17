@@ -1,0 +1,70 @@
+family-task-manager/
+├── backend/
+│   ├── pom.xml
+│   └── src/
+│       └── main/
+│           ├── java/
+│           │   └── com/
+│           │       └── example/
+│           │           └── familytaskmanager/
+│           │               ├── FamilyTaskManagerApplication.java
+│           │               ├── config/
+│           │               │   └── SecurityConfig.java
+│           │               ├── controller/
+│           │               │   ├── AuthController.java
+│           │               │   ├── TaskController.java
+│           │               │   └── UserController.java
+│           │               ├── model/
+│           │               │   ├── User.java
+│           │               │   ├── Family.java
+│           │               │   ├── Task.java
+│           │               │   └── Reward.java
+│           │               ├── repository/
+│           │               │   ├── UserRepository.java
+│           │               │   ├── FamilyRepository.java
+│           │               │   ├── TaskRepository.java
+│           │               │   └── RewardRepository.java
+│           │               ├── service/
+│           │               │   ├── UserService.java
+│           │               │   ├── TaskService.java
+│           │               │   └── FamilyService.java
+│           │               └── security/
+│           │                   ├── JwtAuthenticationFilter.java
+│           │                   └── JwtTokenProvider.java
+│           └── resources/
+│               ├── application.properties
+│               └── data.sql
+└── frontend/
+    ├── package.json
+    ├── angular.json
+    └── src/
+        ├── app/
+        │   ├── app.module.ts
+        │   ├── app-routing.module.ts
+        │   ├── components/
+        │   │   ├── login/
+        │   │   │   ├── login.component.ts
+        │   │   │   ├── login.component.html
+        │   │   │   └── login.component.scss
+        │   │   ├── task-list/
+        │   │   │   ├── task-list.component.ts
+        │   │   │   ├── task-list.component.html
+        │   │   │   └── task-list.component.scss
+        │   │   ├── task-detail/
+        │   │   │   ├── task-detail.component.ts
+        │   │   │   ├── task-detail.component.html
+        │   │   │   └── task-detail.component.scss
+        │   │   └── dashboard/
+        │   │       ├── dashboard.component.ts
+        │   │       ├── dashboard.component.html
+        │   │       └── dashboard.component.scss
+        │   ├── services/
+        │   │   ├── auth.service.ts
+        │   │   └── task.service.ts
+        │   └── models/
+        │       ├── user.model.ts
+        │       └── task.model.ts
+        ├── assets/
+        └── environments/
+            ├── environment.ts
+            └── environment.prod.ts
