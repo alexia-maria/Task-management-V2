@@ -1,0 +1,51 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Badges</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div *ngIf="authService.isParent">
+      <h3>Creez un nou badge</h3>
+      <mat-form-field appearance="fill">
+        <mat-label>Nume</mat-label>
+        <input matInput [(ngModel)]="newBadge.name">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Criteriu</mat-label>
+        <input matInput [(ngModel)]="newBadge.criteria">
+      </mat-form-field>
+      <button mat-raised-button color="primary" (click)="createBadge()">
+        Salvează
+      </button>
+    </div>
+
+    <hr>
+    <h3>Listă badge-uri</h3>
+    <table mat-table [dataSource]="badges" class="mat-elevation-z8">
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>ID</th>
+        <td mat-cell *matCellDef="let b">{{ b.id }}</td>
+      </ng-container>
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Nume</th>
+        <td mat-cell *matCellDef="let b">{{ b.name }}</td>
+      </ng-container>
+      <ng-container matColumnDef="criteria">
+        <th mat-header-cell *matHeaderCellDef>Criteriu</th>
+        <td mat-cell *matCellDef="let b">{{ b.criteria }}</td>
+      </ng-container>
+      <ng-container matColumnDef="assign">
+        <th mat-header-cell *matHeaderCellDef>Asignare</th>
+        <td mat-cell *matCellDef="let b">
+          <div *ngIf="authService.isParent">
+            <button mat-button color="primary" (click)="assignBadge(b.id)">
+              Asignez la userId={{ userIdForAssignment }}
+            </button>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="['id','name','criteria','assign']"></tr>
+      <tr mat-row *matRowDef="let row; columns:['id','name','criteria','assign']"></tr>
+    </table>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,39 @@
+<mat-card>
+    <mat-card-header>
+      <mat-card-title>Creare Task Nou</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-form-field appearance="fill">
+        <mat-label>Titlu</mat-label>
+        <input matInput [(ngModel)]="title">
+      </mat-form-field>
+  
+      <mat-form-field appearance="fill">
+        <mat-label>Descriere</mat-label>
+        <input matInput [(ngModel)]="description">
+      </mat-form-field>
+  
+      <mat-form-field appearance="fill">
+        <mat-label>Dificultate</mat-label>
+        <mat-select [(value)]="difficulty">
+          <mat-option value="Ușor">Ușor</mat-option>
+          <mat-option value="Mediu">Mediu</mat-option>
+          <mat-option value="Greu">Greu</mat-option>
+        </mat-select>
+      </mat-form-field>
+  
+      <mat-form-field appearance="fill">
+        <mat-label>Puncte</mat-label>
+        <input matInput type="number" [(ngModel)]="points">
+      </mat-form-field>
+  
+      <mat-form-field appearance="fill">
+        <mat-label>ID Copil</mat-label>
+        <input matInput type="number" [(ngModel)]="userId">
+      </mat-form-field>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="createTask()">Salvează</button>
+    </mat-card-actions>
+  </mat-card>
+  

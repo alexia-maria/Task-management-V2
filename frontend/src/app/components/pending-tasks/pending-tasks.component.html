@@ -1,0 +1,30 @@
+<mat-card>
+    <mat-card-header>
+      <mat-card-title>Task-uri de Aprobat</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <table mat-table [dataSource]="tasks" class="mat-elevation-z8">
+        <ng-container matColumnDef="title">
+          <th mat-header-cell *matHeaderCellDef>Titlu</th>
+          <td mat-cell *matCellDef="let t">{{ t.title }}</td>
+        </ng-container>
+  
+        <ng-container matColumnDef="assignedTo">
+          <th mat-header-cell *matHeaderCellDef>Copil</th>
+          <td mat-cell *matCellDef="let t">{{ t.assignedTo?.username }}</td>
+        </ng-container>
+  
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Acțiuni</th>
+          <td mat-cell *matCellDef="let t">
+            <button mat-button color="primary" (click)="approveTask(t.id)">Aprobă</button>
+            <button mat-button color="warn" (click)="rejectTask(t.id)">Respinge</button>
+          </td>
+        </ng-container>
+  
+        <tr mat-header-row *matHeaderRowDef="['title','assignedTo','actions']"></tr>
+        <tr mat-row *matRowDef="let row; columns:['title','assignedTo','actions']"></tr>
+      </table>
+    </mat-card-content>
+  </mat-card>
+  

@@ -1,0 +1,38 @@
+<div class="dashboard-grid">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Task-uri</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <ul>
+        <li *ngFor="let t of tasks">
+          {{ t.title }} - <strong>{{ t.status }}</strong>
+        </li>
+      </ul>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Leaderboard</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <ol>
+        <li *ngFor="let user of leaderboard">{{ user.username }} ({{ user.points }} pct)</li>
+      </ol>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card *ngIf="authService.user?.role==='COPIL'">
+    <mat-card-header>
+      <mat-card-title>Recompense Disponibile</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <ul>
+        <li *ngFor="let r of rewards">
+          {{ r.description }} - <strong>{{ r.cost }} puncte</strong>
+        </li>
+      </ul>
+    </mat-card-content>
+  </mat-card>
+</div>

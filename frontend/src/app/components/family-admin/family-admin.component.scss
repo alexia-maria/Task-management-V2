@@ -1,0 +1,11 @@
+.family-admin-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 20px;
+  
+    mat-card {
+      padding: 20px;
+    }
+  }
+  

@@ -1,0 +1,38 @@
+.dashboard-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 20px;
+  margin-bottom: 50px;
+
+  .mat-card {
+    min-height: 200px;
+  }
+
+  .reward-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 8px 0;
+  }
+}
+
+.add-task-dialog {
+  position: fixed;
+  top: 20%;
+  left: 35%;
+  width: 400px;
+  background-color: #fff;
+  padding: 20px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+  border-radius: 8px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}

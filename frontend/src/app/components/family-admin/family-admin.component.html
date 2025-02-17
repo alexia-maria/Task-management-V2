@@ -1,0 +1,66 @@
+<div class="family-admin-container">
+    <h2>Gestionare Familii (Admin / Părinte)</h2>
+  
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Creează Familie</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-form-field appearance="fill">
+          <mat-label>Nume familie</mat-label>
+          <input matInput [(ngModel)]="newFamilyName">
+        </mat-form-field>
+        <button mat-raised-button color="primary" (click)="createFamily()">Salvează</button>
+      </mat-card-content>
+    </mat-card>
+  
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Liste Familii Existente</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <ul>
+          <li *ngFor="let f of families">
+            ID {{ f.id }} - <b>{{ f.name }}</b> 
+            ({{ f.members?.length || 0 }} membri)
+            <div *ngIf="f.members?.length">
+              Membri:
+              <span *ngFor="let m of f.members">
+                {{ m.username }} ({{ m.role }}),
+              </span>
+            </div>
+          </li>
+        </ul>
+      </mat-card-content>
+    </mat-card>
+  
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Asignează User la Familie</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-form-field appearance="fill">
+          <mat-label>Familie</mat-label>
+          <mat-select [(value)]="selectedFamilyId">
+            <mat-option *ngFor="let fam of families" [value]="fam.id">
+              {{ fam.name }} (ID {{ fam.id }})
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+  
+        <mat-form-field appearance="fill">
+          <mat-label>User</mat-label>
+          <mat-select [(value)]="selectedUserId">
+            <mat-option *ngFor="let u of allUsers" [value]="u.id">
+              {{ u.username }} - {{ u.role }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+  
+        <button mat-raised-button color="accent" (click)="addUserToFamily()">
+          Asignează
+        </button>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  

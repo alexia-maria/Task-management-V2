@@ -1,0 +1,47 @@
+/* Toolbar de sus */
+.top-toolbar {
+  height: 64px;
+  display: flex;
+  align-items: center;
+
+  .app-title {
+    font-weight: bold;
+    font-size: 1.2rem;
+  }
+  .spacer {
+    flex: 1 1 auto;
+  }
+}
+
+/* Container general care ține side nav + conținut */
+.main-container {
+  height: calc(100vh - 64px); /* scade 64px, cât e toolbarul */
+  width: 100%;
+}
+
+/* Bara laterală lată (280px) */
+.side-nav {
+  width: 280px;
+  background-color: #f8f8f8;
+  box-shadow: 2px 0 6px rgba(0,0,0,0.1);
+  padding: 16px;
+}
+
+/* Conținut din side nav (logo, butoane) */
+.side-nav-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  .logo {
+    margin: 0 0 20px 0;
+    font-size: 1.3rem;
+    font-weight: 600;
+  }
+}
+
+/* Conținutul principal, la dreapta side nav */
+.main-content {
+  width: 100%;
+  padding: 16px;
+  overflow-y: auto;
+}

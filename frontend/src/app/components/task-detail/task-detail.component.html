@@ -1,0 +1,7 @@
+<div *ngIf="task" class="task-detail">
+    <h2>{{ task.title }}</h2>
+    <p>{{ task.description }}</p>
+    <p>Punctaj: {{ task.points }}</p>
+    <p>Status: {{ task.completed ? 'Completat' : 'În așteptare' }}</p>
+  </div>
+  

@@ -1,0 +1,99 @@
+<div class="dashboard-wrapper">
+
+    <mat-card class="welcome-card">
+      <mat-card-header>
+        <mat-card-title>Bun venit!</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p *ngIf="authService.user">
+          Te-ai conectat ca <strong>{{ authService.user.username }}</strong>
+        </p>
+      </mat-card-content>
+    </mat-card>
+  
+    <mat-card class="task-overview-card">
+      <mat-card-header>
+        <mat-card-title>Task-uri curente</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <ul>
+          <li *ngFor="let t of tasks">{{ t.title }} - <strong>{{ t.status }}</strong></li>
+        </ul>
+        <button mat-raised-button color="primary" *ngIf="isParent" (click)="openAddTaskForm()">
+          Adaugă Task
+        </button>
+      </mat-card-content>
+    </mat-card>
+  
+    <mat-card class="leaderboard-card">
+      <mat-card-header>
+        <mat-card-title>Leaderboard</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <table mat-table [dataSource]="leaderboard" class="mat-elevation-z8">
+          <ng-container matColumnDef="pos">
+            <th mat-header-cell *matHeaderCellDef>#</th>
+            <td mat-cell *matCellDef="let row; let i=index">{{ i+1 }}</td>
+          </ng-container>
+          <ng-container matColumnDef="username">
+            <th mat-header-cell *matHeaderCellDef>Utilizator</th>
+            <td mat-cell *matCellDef="let row">{{ row.username }}</td>
+          </ng-container>
+          <ng-container matColumnDef="points">
+            <th mat-header-cell *matHeaderCellDef>Puncte</th>
+            <td mat-cell *matCellDef="let row">{{ row.points }}</td>
+          </ng-container>
+  
+          <tr mat-header-row *matHeaderRowDef="['pos','username','points']"></tr>
+          <tr mat-row *matRowDef="let row; columns:['pos','username','points']"></tr>
+        </table>
+      </mat-card-content>
+    </mat-card>
+  
+    <mat-card class="rewards-card" *ngIf="isChild">
+      <mat-card-header>
+        <mat-card-title>Recompense disponibile</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div *ngFor="let rw of rewards" class="reward-item">
+          <span>{{ rw.description }} - <strong>{{ rw.cost }} puncte</strong></span>
+          <button mat-button color="primary" (click)="claimReward(rw.id)">Revendică</button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  
+  </div>
+  
+  <mat-dialog-container *ngIf="showAddTask" class="add-task-dialog">
+    <h2>Adaugă Task</h2>
+    <mat-form-field appearance="fill">
+      <mat-label>Titlu</mat-label>
+      <input matInput [(ngModel)]="newTask.title">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Descriere</mat-label>
+      <input matInput [(ngModel)]="newTask.description">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Dificultate</mat-label>
+      <mat-select [(value)]="newTask.difficulty">
+        <mat-option value="Ușor">Ușor</mat-option>
+        <mat-option value="Mediu">Mediu</mat-option>
+        <mat-option value="Dificil">Dificil</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Puncte</mat-label>
+      <input matInput type="number" [(ngModel)]="newTask.points">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Atribuit userId</mat-label>
+      <input matInput type="number" [(ngModel)]="newTask.userId">
+    </mat-form-field>
+  
+    <div class="dialog-actions">
+      <button mat-button (click)="cancelAddTask()">Anulează</button>
+      <button mat-raised-button color="primary" (click)="submitAddTask()">Salvează</button>
+    </div>
+  </mat-dialog-container>
+  

@@ -1,0 +1,16 @@
+/* profile.component.html */
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Profil</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div *ngIf="authService.user">
+      <p><strong>Utilizator:</strong> {{ authService.user.username }}</p>
+      <p><strong>Rol:</strong> {{ authService.user.role }}</p>
+      <p><strong>Puncte:</strong> {{ authService.user.points }}</p>
+    </div>
+    <div *ngIf="!authService.user">
+      <p>Nu ești conectat.</p>
+    </div>
+  </mat-card-content>
+</mat-card>

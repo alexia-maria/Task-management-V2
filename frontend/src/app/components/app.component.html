@@ -1,0 +1,40 @@
+<!-- 
+  Am integrat side nav direct în app.component, 
+  așa încât tot conținutul (router-outlet) să fie la vedere.
+-->
+
+<!-- Bară superioară simplă cu <app-header> -->
+    <app-header></app-header>
+
+    <!-- Container principal care conține side nav pe stânga și conținutul pe dreapta -->
+    <mat-sidenav-container class="main-container">
+      
+      <!-- Meniu lateral (Side Nav) -->
+      <mat-sidenav mode="side" opened class="side-nav" *ngIf="authService.isLoggedIn">
+        <div class="side-nav-content">
+          <h3 class="logo">Family Task Manager</h3>
+          <button mat-button routerLink="/dashboard">Dashboard</button>
+    
+          <!-- Apare doar pentru PĂRINTE -->
+          <button mat-button routerLink="/create-task" *ngIf="authService.isParent">Creează Task</button>
+          <button mat-button routerLink="/pending-tasks" *ngIf="authService.isParent">Aprobă Task-uri</button>
+          
+          <!-- Apare doar pentru COPIL -->
+          <button mat-button routerLink="/tasks" *ngIf="authService.isChild">Task-urile Mele</button>
+    
+          <!-- Disponibil tuturor -->
+          <button mat-button routerLink="/leaderboard">Leaderboard</button>
+          <button mat-button routerLink="/rewards">Recompense</button>
+          <button mat-button routerLink="/badges">Badges</button>
+          <button mat-button routerLink="/profile">Profil</button>
+    
+        </div>
+      </mat-sidenav>
+    
+      <!-- Conținutul principal -->
+      <mat-sidenav-content class="main-content">
+        <router-outlet></router-outlet>
+      </mat-sidenav-content>
+    
+    </mat-sidenav-container>
+    

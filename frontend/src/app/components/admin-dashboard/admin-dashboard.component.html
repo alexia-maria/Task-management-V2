@@ -1,0 +1,54 @@
+<div class="admin-wrapper">
+    <h2>ADMIN - Gestionare Familii</h2>
+  
+    <mat-card class="family-create">
+      <mat-card-header>
+        <mat-card-title>Creează o familie</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-form-field appearance="fill">
+          <mat-label>Nume familie</mat-label>
+          <input matInput [(ngModel)]="newFamilyName">
+        </mat-form-field>
+        <button mat-raised-button color="primary" (click)="createFamily()">Salvează</button>
+      </mat-card-content>
+    </mat-card>
+  
+    <mat-card class="family-list">
+      <mat-card-header>
+        <mat-card-title>Liste Familii existente</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <ul>
+          <li *ngFor="let f of families">
+            {{ f.id }} - {{ f.name }} 
+            (membri: {{ f.members?.length || 0 }})
+          </li>
+        </ul>
+      </mat-card-content>
+    </mat-card>
+  
+    <mat-card class="add-user">
+      <mat-card-header>
+        <mat-card-title>Asignează User la Familie</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-form-field appearance="fill">
+          <mat-label>Familie</mat-label>
+          <mat-select [(value)]="selectedFamilyId">
+            <mat-option *ngFor="let f of families" [value]="f.id">{{ f.name }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+  
+        <mat-form-field appearance="fill">
+          <mat-label>User</mat-label>
+          <mat-select [(value)]="selectedUserId">
+            <mat-option *ngFor="let u of allUsers" [value]="u.id">{{ u.username }} ({{ u.role }})</mat-option>
+          </mat-select>
+        </mat-form-field>
+  
+        <button mat-raised-button color="primary" (click)="addUserToFamily()">Asignează</button>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  

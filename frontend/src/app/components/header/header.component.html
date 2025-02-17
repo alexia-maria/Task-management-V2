@@ -1,0 +1,18 @@
+<!-- 
+  O bară superioară simplă (top toolbar) cu butoane 
+  de Login / Register / Logout. 
+  Fără side nav aici, că l-am pus în app.component.
+-->
+
+<mat-toolbar color="primary" class="top-toolbar">
+  <span class="app-title">Family Task Manager</span>
+
+  <span class="spacer"></span>
+
+  <!-- Dacă NU e logat, afișăm butoanele de login/register -->
+  <button mat-button routerLink="/login" *ngIf="!authService.isLoggedIn">Login</button>
+  <button mat-button routerLink="/register" *ngIf="!authService.isLoggedIn">Register</button>
+
+  <!-- Dacă e logat, buton de Logout -->
+  <button mat-button (click)="logout()" *ngIf="authService.isLoggedIn">Logout</button>
+</mat-toolbar>

@@ -1,0 +1,53 @@
+<!-- 
+  O bară superioară fixă (top toolbar) cu butoane de Login/Register/Logout.
+  Apare tot timpul.
+-->
+<mat-toolbar color="primary" class="top-toolbar">
+    <span class="app-title">Family Task Manager</span>
+    <span class="spacer"></span>
+    
+    <!-- Dacă userul NU e logat, afișăm butoanele de Login și Register -->
+    <button mat-button routerLink="/login" *ngIf="!authService.isLoggedIn">Login</button>
+    <button mat-button routerLink="/register" *ngIf="!authService.isLoggedIn">Register</button>
+    
+    <!-- Dacă userul e logat, afișăm butonul de Logout -->
+    <button mat-button (click)="authService.logout()" *ngIf="authService.isLoggedIn">Logout</button>
+  </mat-toolbar>
+  
+  <!-- 
+    Container principal cu side nav (stânga) + conținut (dreapta).
+    Bara laterală e vizibilă doar dacă userul este logat.
+  -->
+  <mat-sidenav-container class="main-container">
+  
+    <!-- Bara laterală (Side Nav). Doar dacă user e logat. -->
+    <mat-sidenav mode="side" opened class="side-nav" *ngIf="authService.isLoggedIn">
+      <div class="side-nav-content">
+        <h3 class="logo">Familie</h3>
+  
+        <!-- Meniu comun tuturor -->
+        <button mat-button routerLink="/dashboard">Dashboard</button>
+        <button mat-button routerLink="/leaderboard">Leaderboard</button>
+        <button mat-button routerLink="/rewards">Recompense</button>
+        <button mat-button routerLink="/badges">Badges</button>
+        <button mat-button routerLink="/profile">Profil</button>
+        <button mat-button routerLink="/admin" *ngIf="authService.isAdmin">Admin Familii</button>
+        <button mat-button routerLink="/family-admin" *ngIf="authService.isAdmin || authService.isParent">
+      Gestionare Familii
+            </button>
+        <!-- Meniu special PĂRINTE -->
+        <button mat-button routerLink="/create-task" *ngIf="authService.isParent">Creează Task</button>
+        <button mat-button routerLink="/pending-tasks" *ngIf="authService.isParent">Aprobă Task-uri</button>
+  
+        <!-- Meniu special COPIL -->
+        <button mat-button routerLink="/tasks" *ngIf="authService.isChild">Task-urile Mele</button>
+      </div>
+    </mat-sidenav>
+  
+    <!-- Conținutul paginii (router-outlet), în dreapta side nav -->
+    <mat-sidenav-content class="main-content">
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  
+  </mat-sidenav-container>
+  

@@ -1,0 +1,52 @@
+<div class="rewards-container">
+  <h2>Lista Recompense</h2>
+
+  <!-- Buton vizibil doar pentru Părinte -->
+  <button mat-raised-button color="primary" *ngIf="isParent" (click)="toggleRewardForm()">
+    Adaugă recompensă
+  </button>
+
+  <!-- Formular creere recompensă (Părinte) -->
+  <mat-card *ngIf="showRewardForm" class="create-reward-form">
+    <mat-card-header>
+      <mat-card-title>Creare Recompensă</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-form-field appearance="fill">
+        <mat-label>Descriere</mat-label>
+        <input matInput [(ngModel)]="newReward.description">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Cost (puncte)</mat-label>
+        <input matInput type="number" [(ngModel)]="newReward.cost">
+      </mat-form-field>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="accent" (click)="createReward()">Salvează</button>
+      <button mat-button (click)="toggleRewardForm()">Anulează</button>
+    </mat-card-actions>
+  </mat-card>
+
+  <hr>
+
+  <!-- Listă recompense existente -->
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Recompense disponibile</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div *ngIf="rewards?.length; else noRewards">
+        <div class="reward-item" *ngFor="let rw of rewards">
+          <span>{{ rw.description }} - <strong>{{ rw.cost }} puncte</strong></span>
+          <!-- Dacă e COPIL, poate revendica -->
+          <button mat-button color="primary" (click)="claim(rw.id)" *ngIf="isChild">
+            Obține
+          </button>
+        </div>
+      </div>
+      <ng-template #noRewards>
+        <p>Nu sunt recompense disponibile.</p>
+      </ng-template>
+    </mat-card-content>
+  </mat-card>
+</div>
