@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from './services/auth.service';
 
 @Component({
@@ -23,7 +23,11 @@ export class RewardsComponent implements OnInit {
   }
 
   loadRewards(){
-    this.http.get<any[]>('http://localhost:8080/api/rewards')
+    const headers = new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem("userToken")}`
+      });
+    this.http.get<any[]>('http://localhost:8080/api/rewards', {headers: headers})
       .subscribe(data=>this.rewards=data);
   }
 
@@ -39,12 +43,16 @@ export class RewardsComponent implements OnInit {
   }
 
   createReward(){
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem("userToken")}`
+  });
     const url='http://localhost:8080/api/rewards';
-    const params={
+    const newReward ={
       description:this.newReward.description,
       cost:this.newReward.cost
     };
-    this.http.post(url, null, { params })
+    this.http.post(url, newReward, { headers: headers })
       .subscribe(resp=>{
         alert("Recompensă creată!");
         this.showRewardForm=false;
@@ -57,7 +65,11 @@ export class RewardsComponent implements OnInit {
     if(!this.authService.user) return;
     const userId=this.authService.user.id;
     const url=`http://localhost:8080/api/rewards/${rewardId}/claim?userId=${userId}`;
-    this.http.put(url,{}).subscribe(resp=>{
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem("userToken")}`
+  });
+    this.http.put(url, {}, {headers: headers}).subscribe(resp=>{
       alert(resp);
       this.loadRewards();
     });

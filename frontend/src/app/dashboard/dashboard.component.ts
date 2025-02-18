@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from '../services/auth.service';
 
 @Component({
@@ -32,15 +32,29 @@ export class DashboardComponent implements OnInit {
   }
 
   loadTasks(){
-    this.http.get<any[]>('http://localhost:8080/api/tasks')
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem("userToken")}`
+  });
+    this.http.get<any[]>('http://localhost:8080/api/tasks', {headers: headers})
       .subscribe(data=>this.tasks=data);
   }
+
   loadLeaderboard(){
-    this.http.get<any[]>('http://localhost:8080/api/leaderboard')
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem("userToken")}`
+  });
+    this.http.get<any[]>('http://localhost:8080/api/leaderboard', {headers: headers})
       .subscribe(data=>this.leaderboard=data);
   }
+
   loadRewards(){
-    this.http.get<any[]>('http://localhost:8080/api/rewards')
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem("userToken")}`
+  });
+    this.http.get<any[]>('http://localhost:8080/api/rewards', {headers: headers})
       .subscribe(data=>this.rewards=data);
   }
 
@@ -49,8 +63,12 @@ export class DashboardComponent implements OnInit {
 
   claimReward(rid:number){
     if(!this.authService.user) return;
+    const headers = new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem("userToken")}`
+      });
     const url=`http://localhost:8080/api/rewards/${rid}/claim?userId=${this.authService.user.id}`;
-    this.http.put(url,{}).subscribe(resp=>{
+    this.http.put(url,{}, {headers: headers}).subscribe(resp=>{
       alert(resp);
       this.loadRewards();
     });
@@ -70,7 +88,11 @@ export class DashboardComponent implements OnInit {
       points:this.newTask.points,
       userId:this.newTask.userId
     };
-    this.http.post<any>('http://localhost:8080/api/tasks', null, { params })
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem("userToken")}`
+  });
+    this.http.post<any>('http://localhost:8080/api/tasks', null, { params, headers: headers })
       .subscribe(()=>{
         alert("Task creat");
         this.loadTasks();

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -21,17 +21,29 @@ export class DashboardComponent implements OnInit {
   }
 
   loadTasks(){
-    this.http.get<any[]>('http://localhost:8080/api/tasks')
+    const headers = new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem("userToken")}`
+      });
+    this.http.get<any[]>('http://localhost:8080/api/tasks', {headers: headers})
       .subscribe(data=>this.tasks=data);
   }
 
   loadLeaderboard(){
-    this.http.get<any[]>('http://localhost:8080/api/leaderboard')
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem("userToken")}`
+  });
+    this.http.get<any[]>('http://localhost:8080/api/leaderboard', {headers: headers})
       .subscribe(data=>this.leaderboard=data);
   }
 
   loadRewards(){
-    this.http.get<any[]>('http://localhost:8080/api/rewards')
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem("userToken")}`
+  });
+    this.http.get<any[]>('http://localhost:8080/api/rewards', {headers: headers})
       .subscribe(data=>this.rewards=data);
   }
 }

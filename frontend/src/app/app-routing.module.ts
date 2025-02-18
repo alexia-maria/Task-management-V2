@@ -12,6 +12,7 @@ import { RewardsComponent } from './components/rewards/rewards.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { BadgesComponent } from './components/badges/badges.component';
 import { FamilyAdminComponent } from './components/family-admin/family-admin.component';
+import { CreateTaskComponent } from './components/create-task/create-task.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -19,6 +20,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'tasks', component: TasksComponent },
+  { path: 'create-task', component: CreateTaskComponent },
   { path: 'pending-tasks', component: PendingTasksComponent },
   { path: 'leaderboard', component: LeaderboardComponent },
   { path: 'rewards', component: RewardsComponent },

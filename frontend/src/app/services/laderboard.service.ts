@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -11,6 +11,10 @@ export class LeaderboardService {
   constructor(private http: HttpClient) {}
 
   getLeaderboard(): Observable<any[]> {
-    return this.http.get<any[]>(this.baseUrl);
+    const headers = new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem("userToken")}`
+      });
+    return this.http.get<any[]>(this.baseUrl, {headers: headers});
   }
 }

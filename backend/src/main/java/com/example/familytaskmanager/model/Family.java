@@ -1,5 +1,7 @@
 package com.example.familytaskmanager.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -15,6 +17,7 @@ public class Family {
     private String name;
 
     @OneToMany(mappedBy="family")
+    @JsonManagedReference
     private Set<User> members = new HashSet<>();
 
     public Family(){}

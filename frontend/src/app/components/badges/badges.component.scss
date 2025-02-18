@@ -7,4 +7,13 @@
       display: block;
       margin-bottom: 10px;
     }
+
+    table.mat-table {
+      border-collapse: separate;
+      border-spacing: 20px;
+    }
+    
+    .mat-header-cell, .mat-cell {
+      padding: 10px 20px;
+    }
   }

@@ -9,7 +9,7 @@ public class JwtTokenProvider {
     private final String secretKey = "secretKey";
     private final long expiration = 3600000;
 
-    public String generateToken(String username) {
+    public String generateToken(String username, String userRole) {
         Date now = new Date();
         Date exp = new Date(now.getTime() + expiration);
         return Jwts.builder()
@@ -17,6 +17,7 @@ public class JwtTokenProvider {
             .setIssuedAt(now)
             .setExpiration(exp)
             .signWith(SignatureAlgorithm.HS512, secretKey)
+            .claim("scope", userRole)
             .compact();
     }
 

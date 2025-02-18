@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector:'app-admin-dashboard',
@@ -22,15 +22,23 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   loadFamilies(){
-    this.http.get<any[]>('http://localhost:8080/api/family')
+    const headers = new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem("userToken")}`
+      });
+    this.http.get<any[]>('http://localhost:8080/api/family', {headers: headers})
       .subscribe(resp=>this.families=resp);
   }
 
   createFamily(){
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem("userToken")}`
+  });
     // POST /api/family => { "name": this.newFamilyName }
     this.http.post<any>('http://localhost:8080/api/family',{
       name:this.newFamilyName
-    }).subscribe(resp=>{
+    }, {headers: headers}).subscribe(resp=>{
       alert("Familie creată: "+ resp.name);
       this.loadFamilies();
       this.newFamilyName='';
@@ -43,13 +51,21 @@ export class AdminDashboardComponent implements OnInit {
     //   1) creezi un GET /api/users 
     //   2) te bazezi pe /auth/list sau altceva
     // Aici exemplu minimal, să știi să-l implementezi la backend
-    this.http.get<any[]>('http://localhost:8080/api/users') 
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem("userToken")}`
+  });
+    this.http.get<any[]>('http://localhost:8080/api/users', {headers: headers}) 
       .subscribe(resp=>this.allUsers=resp);
   }
 
   addUserToFamily(){
     // PUT /api/family/{familyId}/addUser?userId=...
-    this.http.put(`http://localhost:8080/api/family/${this.selectedFamilyId}/addUser?userId=${this.selectedUserId}`,{})
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem("userToken")}`
+  });
+    this.http.put(`http://localhost:8080/api/family/${this.selectedFamilyId}/addUser?userId=${this.selectedUserId}`,{}, {headers: headers})
       .subscribe(resp=>{
         alert(resp);
         this.loadFamilies();

@@ -6,7 +6,7 @@
     <mat-card-content>
       <ul>
         <li *ngFor="let t of tasks">
-          {{ t.title }} - <strong>{{ t.status }}</strong>
+          {{ t.title }} - <strong>{{ t.status }}</strong> - assignat la {{t.assignedTo.username}}
         </li>
       </ul>
     </mat-card-content>
