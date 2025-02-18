@@ -64,13 +64,8 @@ public class AuthController {
             User dbUser = opt.get();
             // mai bine intoarcem un userDTO care are doar campurile care ne intereseaza la user pt front, inclusiv token-ul de access
             // token-ul de access e pastrat in local storage si va fi inclus in header-ul fiecarui request catre backend
-            UserDTO userDTO = UserDTO.builder()
-                    .id(dbUser.getId())
-                    .role(dbUser.getRole())
-                    .points(dbUser.getPoints())
-                    .username(dbUser.getUsername())
-                    .accessToken(tokenProvider.generateToken(dbUser.getUsername(), dbUser.getRole()))
-                    .build();
+            UserDTO userDTO = new UserDTO(tokenProvider.generateToken(dbUser.getUsername(), dbUser.getRole())
+                    , dbUser.getId(), dbUser.getUsername(), dbUser.getRole(), dbUser.getPoints());
             if (nonNull(dbUser.getFamily())) {
                 userDTO.setFamilyId(dbUser.getFamily().getId());
             }
