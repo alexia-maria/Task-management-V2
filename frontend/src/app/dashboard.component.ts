@@ -69,7 +69,7 @@ export class DashboardComponent implements OnInit {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${localStorage.getItem("userToken")}`
   });
-    this.http.put(url,{headers: headers}).subscribe(resp=>{
+    this.http.put(url, {}, {headers: headers}).subscribe(resp=>{
       alert(resp);
       this.loadRewards();
     });

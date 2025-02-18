@@ -41,7 +41,7 @@ export class TaskListComponent implements OnInit {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${localStorage.getItem("userToken")}`
   });
-    this.http.put(`http://localhost:8080/api/tasks/${id}/start`,{headers: headers})
+    this.http.put(`http://localhost:8080/api/tasks/${id}/start`,{}, {headers: headers})
       .subscribe(()=>this.load());
   }
 
@@ -50,7 +50,7 @@ export class TaskListComponent implements OnInit {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${localStorage.getItem("userToken")}`
   });
-    this.http.put(`http://localhost:8080/api/tasks/${id}/complete`,{headers: headers})
+    this.http.put(`http://localhost:8080/api/tasks/${id}/complete`, {}, {headers: headers})
       .subscribe(()=>this.load());
   }
 
@@ -59,7 +59,7 @@ export class TaskListComponent implements OnInit {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${localStorage.getItem("userToken")}`
   });
-    this.http.put(`http://localhost:8080/api/tasks/${id}/approve`,{headers: headers})
+    this.http.put(`http://localhost:8080/api/tasks/${id}/approve`,{}, {headers: headers})
       .subscribe(()=>this.load());
   }
 
@@ -68,7 +68,7 @@ export class TaskListComponent implements OnInit {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${localStorage.getItem("userToken")}`
   });
-    this.http.put(`http://localhost:8080/api/tasks/${id}/reject`,{headers: headers})
+    this.http.put(`http://localhost:8080/api/tasks/${id}/reject`,{}, {headers: headers})
       .subscribe(()=>this.load());
   }
 }

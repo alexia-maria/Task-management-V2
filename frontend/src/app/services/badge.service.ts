@@ -28,6 +28,6 @@ export class BadgeService {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${localStorage.getItem("userToken")}`
   });
-    return this.http.put(`http://localhost:8080/api/badges/${badgeId}/assign?userId=${userId}`,{headers: headers});
+    return this.http.put(`http://localhost:8080/api/badges/${badgeId}/assign?userId=${userId}`,{}, {headers: headers});
   }
 }

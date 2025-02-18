@@ -68,7 +68,7 @@ export class DashboardComponent implements OnInit {
           'Authorization': `Bearer ${localStorage.getItem("userToken")}`
       });
     const url=`http://localhost:8080/api/rewards/${rid}/claim?userId=${this.authService.user.id}`;
-    this.http.put(url,{headers: headers}).subscribe(resp=>{
+    this.http.put(url,{}, {headers: headers}).subscribe(resp=>{
       alert(resp);
       this.loadRewards();
     });

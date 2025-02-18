@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { TaskService } from 'src/app/services/task.service';
 import { Router } from '@angular/router';
+import { User } from 'src/app/models/user.model';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector:'app-create-task',
@@ -13,8 +15,15 @@ export class CreateTaskComponent {
   difficulty:string='Mediu';
   points:number=10;
   userId:number=2; // ID-ul copilului (sau selectez dintre useri, exemplu simplu)
+  allUsers: User[] = []; // poate ar trebui filtrat astfel incat sa se poata asigna doar la user-ul curent si la membrii familiei de care apartine
 
-  constructor(private taskService:TaskService, private router:Router){}
+  constructor(private taskService:TaskService, private router:Router, private userService: UserService){}
+
+  ngOnInit() {
+    this.userService.getAllUsers().subscribe(allUsers => {
+      this.allUsers = allUsers
+    });
+  }
 
   createTask(){
     this.taskService.createTask(

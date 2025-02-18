@@ -48,11 +48,11 @@ export class RewardsComponent implements OnInit {
       'Authorization': `Bearer ${localStorage.getItem("userToken")}`
   });
     const url='http://localhost:8080/api/rewards';
-    const params={
+    const newReward ={
       description:this.newReward.description,
       cost:this.newReward.cost
     };
-    this.http.post(url, null, { params, headers: headers })
+    this.http.post(url, newReward, { headers: headers })
       .subscribe(resp=>{
         alert("Recompensă creată!");
         this.showRewardForm=false;
@@ -69,7 +69,7 @@ export class RewardsComponent implements OnInit {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${localStorage.getItem("userToken")}`
   });
-    this.http.put(url,{headers: headers}).subscribe(resp=>{
+    this.http.put(url, {}, {headers: headers}).subscribe(resp=>{
       alert(resp);
       this.loadRewards();
     });

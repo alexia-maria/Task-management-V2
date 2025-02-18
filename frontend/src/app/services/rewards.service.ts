@@ -15,12 +15,15 @@ export class RewardsService {
   }
 
   createReward(description:string, cost:number){
-    const params={ description, cost };
+    const newReward ={
+      description: description,
+      cost: cost
+    };
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${localStorage.getItem("userToken")}`
   });
-    return this.http.post('http://localhost:8080/api/rewards', null, { params, headers: headers });
+    return this.http.post('http://localhost:8080/api/rewards', newReward, { headers: headers });
   }
 
   claimReward(rewardId:number, userId:number){
@@ -28,6 +31,6 @@ export class RewardsService {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${localStorage.getItem("userToken")}`
   });
-    return this.http.put(`http://localhost:8080/api/rewards/${rewardId}/claim?userId=${userId}`,{headers: headers});
+    return this.http.put(`http://localhost:8080/api/rewards/${rewardId}/claim?userId=${userId}`,{}, {headers: headers});
   }
 }

@@ -38,8 +38,8 @@ export class FamilyAdminComponent implements OnInit {
       'Authorization': `Bearer ${localStorage.getItem("userToken")}`
   });
     this.http.post('http://localhost:8080/api/family',{
-      name:this.newFamilyName, headers: headers
-    }).subscribe((resp:any)=>{
+      name:this.newFamilyName
+    }, {headers: headers}).subscribe((resp:any)=>{
       alert("Familie creată: "+resp.name);
       this.newFamilyName='';
       this.loadFamilies();
@@ -63,7 +63,7 @@ export class FamilyAdminComponent implements OnInit {
       'Authorization': `Bearer ${localStorage.getItem("userToken")}`
   });
     const url=`http://localhost:8080/api/family/${this.selectedFamilyId}/addUser?userId=${this.selectedUserId}`;
-    this.http.put(url,{headers: headers}).subscribe(resp=>{
+    this.http.put(url,{}, {headers: headers}).subscribe(resp=>{
       alert(resp);
       this.loadFamilies();
     });

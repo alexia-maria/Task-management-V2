@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Task } from '../models/task.model';
 
 @Injectable({ providedIn: 'root' })
 export class TaskService {
@@ -20,7 +21,15 @@ export class TaskService {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${localStorage.getItem("userToken")}`
   });
-    return this.http.post<any>('http://localhost:8080/api/tasks', null, {params: params, headers: headers });
+  let newTask: Task = {
+    title: title,
+    description: description,
+    difficulty: difficulty,
+    points: points,
+    assignedUserId: userId,
+    completed: false
+  }
+    return this.http.post<any>('http://localhost:8080/api/tasks', newTask, {headers: headers });
   }
 
   startTask(id:number){
@@ -28,7 +37,7 @@ export class TaskService {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${localStorage.getItem("userToken")}`
   });
-    return this.http.put(`http://localhost:8080/api/tasks/${id}/start`, {headers: headers});
+    return this.http.put(`http://localhost:8080/api/tasks/${id}/start`, {}, {headers: headers});
   }
 
   completeTask(id:number){
@@ -36,7 +45,7 @@ export class TaskService {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${localStorage.getItem("userToken")}`
   });
-    return this.http.put(`http://localhost:8080/api/tasks/${id}/complete`, {headers: headers});
+    return this.http.put(`http://localhost:8080/api/tasks/${id}/complete`, {}, {headers: headers});
   }
 
   approveTask(id:number){
@@ -44,7 +53,7 @@ export class TaskService {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${localStorage.getItem("userToken")}`
   });
-    return this.http.put(`http://localhost:8080/api/tasks/${id}/approve`, {headers: headers});
+    return this.http.put(`http://localhost:8080/api/tasks/${id}/approve`, {}, {headers: headers});
   }
 
   rejectTask(id:number){
@@ -52,6 +61,6 @@ export class TaskService {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${localStorage.getItem("userToken")}`
   });
-    return this.http.put(`http://localhost:8080/api/tasks/${id}/reject`, {headers: headers});
+    return this.http.put(`http://localhost:8080/api/tasks/${id}/reject`, {}, {headers: headers});
   }
 }

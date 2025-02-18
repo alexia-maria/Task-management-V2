@@ -37,8 +37,8 @@ export class AdminDashboardComponent implements OnInit {
   });
     // POST /api/family => { "name": this.newFamilyName }
     this.http.post<any>('http://localhost:8080/api/family',{
-      name:this.newFamilyName, headers: headers
-    }).subscribe(resp=>{
+      name:this.newFamilyName
+    }, {headers: headers}).subscribe(resp=>{
       alert("Familie creată: "+ resp.name);
       this.loadFamilies();
       this.newFamilyName='';
@@ -65,7 +65,7 @@ export class AdminDashboardComponent implements OnInit {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${localStorage.getItem("userToken")}`
   });
-    this.http.put(`http://localhost:8080/api/family/${this.selectedFamilyId}/addUser?userId=${this.selectedUserId}`,{headers: headers})
+    this.http.put(`http://localhost:8080/api/family/${this.selectedFamilyId}/addUser?userId=${this.selectedUserId}`,{}, {headers: headers})
       .subscribe(resp=>{
         alert(resp);
         this.loadFamilies();
