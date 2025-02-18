@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
@@ -7,24 +7,51 @@ export class TaskService {
   constructor(private http:HttpClient){}
 
   getAll():Observable<any[]>{
-    return this.http.get<any[]>('http://localhost:8080/api/tasks');
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem("userToken")}`
+  });
+    return this.http.get<any[]>('http://localhost:8080/api/tasks', {headers: headers});
   }
 
   createTask(title:string, description:string, difficulty:string, points:number, userId:number){
     const params={ title, description, difficulty, points, userId };
-    return this.http.post<any>('http://localhost:8080/api/tasks', null, { params });
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem("userToken")}`
+  });
+    return this.http.post<any>('http://localhost:8080/api/tasks', null, {params: params, headers: headers });
   }
 
   startTask(id:number){
-    return this.http.put(`http://localhost:8080/api/tasks/${id}/start`,{});
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem("userToken")}`
+  });
+    return this.http.put(`http://localhost:8080/api/tasks/${id}/start`, {headers: headers});
   }
+
   completeTask(id:number){
-    return this.http.put(`http://localhost:8080/api/tasks/${id}/complete`,{});
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem("userToken")}`
+  });
+    return this.http.put(`http://localhost:8080/api/tasks/${id}/complete`, {headers: headers});
   }
+
   approveTask(id:number){
-    return this.http.put(`http://localhost:8080/api/tasks/${id}/approve`,{});
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem("userToken")}`
+  });
+    return this.http.put(`http://localhost:8080/api/tasks/${id}/approve`, {headers: headers});
   }
+
   rejectTask(id:number){
-    return this.http.put(`http://localhost:8080/api/tasks/${id}/reject`,{});
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem("userToken")}`
+  });
+    return this.http.put(`http://localhost:8080/api/tasks/${id}/reject`, {headers: headers});
   }
 }

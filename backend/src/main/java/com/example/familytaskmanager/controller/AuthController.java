@@ -1,7 +1,9 @@
 package com.example.familytaskmanager.controller;
 
+import com.example.familytaskmanager.dto.UserDTO;
 import com.example.familytaskmanager.model.User;
 import com.example.familytaskmanager.repository.UserRepository;
+import com.example.familytaskmanager.security.JwtTokenProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -9,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
+
+import static java.util.Objects.nonNull;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -19,10 +23,12 @@ public class AuthController {
 
     private final UserRepository userRepo;
     private final PasswordEncoder encoder;
+    private JwtTokenProvider tokenProvider;
 
-    public AuthController(UserRepository userRepo, PasswordEncoder encoder) {
+    public AuthController(UserRepository userRepo, PasswordEncoder encoder, JwtTokenProvider tokenProvider) {
         this.userRepo = userRepo;
         this.encoder = encoder;
+        this.tokenProvider = tokenProvider;
     }
 
     // POST /auth/register
@@ -56,10 +62,22 @@ public class AuthController {
                 return ResponseEntity.badRequest().body("User not found");
             }
             User dbUser = opt.get();
+            // mai bine intoarcem un userDTO care are doar campurile care ne intereseaza la user pt front, inclusiv token-ul de access
+            // token-ul de access e pastrat in local storage si va fi inclus in header-ul fiecarui request catre backend
+            UserDTO userDTO = UserDTO.builder()
+                    .id(dbUser.getId())
+                    .role(dbUser.getRole())
+                    .points(dbUser.getPoints())
+                    .username(dbUser.getUsername())
+                    .accessToken(tokenProvider.generateToken(dbUser.getUsername(), dbUser.getRole()))
+                    .build();
+            if (nonNull(dbUser.getFamily())) {
+                userDTO.setFamilyId(dbUser.getFamily().getId());
+            }
             if (!encoder.matches(req.getPassword(), dbUser.getPassword())) {
                 return ResponseEntity.badRequest().body("Invalid password");
             }
-            return ResponseEntity.ok(dbUser);
+            return ResponseEntity.ok(userDTO);
         } catch (Exception e) {
             logger.error("Error in login", e);
             return ResponseEntity.status(500).body("Server error during login");

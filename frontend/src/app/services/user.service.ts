@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 
@@ -12,10 +12,18 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   getAllUsers(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl);
+    const headers = new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem("userToken")}`
+      });
+    return this.http.get<any[]>(this.apiUrl, {headers: headers});
   }
 
   getLeaderboard(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/leaderboard`);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem("userToken")}`
+  });
+    return this.http.get<any[]>(`${this.apiUrl}/leaderboard`, {headers: headers});
   }
 }

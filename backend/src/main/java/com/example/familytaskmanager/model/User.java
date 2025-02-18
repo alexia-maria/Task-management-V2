@@ -1,5 +1,7 @@
 package com.example.familytaskmanager.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 
 @Entity
@@ -17,6 +19,7 @@ public class User {
 
     @ManyToOne
     @JoinColumn(name="family_id")
+    @JsonBackReference
     private Family family;
 
     // GETTER / SETTER

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector:'app-leaderboard',
@@ -11,7 +11,11 @@ export class LeaderboardComponent implements OnInit {
   constructor(private http:HttpClient){}
 
   ngOnInit(){
-    this.http.get<any[]>('http://localhost:8080/api/leaderboard')
+    const headers = new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem("userToken")}`
+      });
+    this.http.get<any[]>('http://localhost:8080/api/leaderboard', {headers: headers})
       .subscribe(data=>this.leaderboard=data);
   }
 }

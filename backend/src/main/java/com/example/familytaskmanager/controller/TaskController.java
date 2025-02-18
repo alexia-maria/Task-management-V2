@@ -40,7 +40,7 @@ public class TaskController {
         task.setDeadline(dto.getDeadline());
         task.setStatus("NEINCEPUT");
 
-        Optional<User> assigned = userRepo.findById(dto.getUserId());
+        Optional<User> assigned = userRepo.findById(dto.getAssignedUserId());
         assigned.ifPresent(task::setAssignedTo);
 
         return taskRepo.save(task);
@@ -95,7 +95,7 @@ public class TaskController {
         private String description;
         private String difficulty;
         private int points;
-        private Long userId;
+        private Long assignedUserId;
         private Date deadline;
 
         public String getTitle() { return title; }
@@ -110,8 +110,8 @@ public class TaskController {
         public int getPoints() { return points; }
         public void setPoints(int points) { this.points = points; }
 
-        public Long getUserId() { return userId; }
-        public void setUserId(Long userId) { this.userId = userId; }
+        public Long getAssignedUserId() { return assignedUserId; }
+        public void setAssignedUserId(Long assignedUserId) { this.assignedUserId = assignedUserId; }
 
         public Date getDeadline() { return deadline; }
         public void setDeadline(Date deadline) { this.deadline = deadline; }

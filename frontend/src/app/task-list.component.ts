@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from './services/auth.service';
+import { EACCES } from 'constants';
 
 @Component({
   selector:'app-task-list',
@@ -20,7 +21,11 @@ export class TaskListComponent implements OnInit {
   }
 
   load(){
-    this.http.get<any[]>('http://localhost:8080/api/tasks')
+    const headers = new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem("userToken")}`
+      });
+    this.http.get<any[]>('http://localhost:8080/api/tasks', {headers: headers})
       .subscribe(resp=>{
         if(this.authService.user?.role==='COPIL'){
           const uid=this.authService.user.id;
@@ -32,19 +37,38 @@ export class TaskListComponent implements OnInit {
   }
 
   startTask(id:number){
-    this.http.put(`http://localhost:8080/api/tasks/${id}/start`,{})
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem("userToken")}`
+  });
+    this.http.put(`http://localhost:8080/api/tasks/${id}/start`,{headers: headers})
       .subscribe(()=>this.load());
   }
+
   completeTask(id:number){
-    this.http.put(`http://localhost:8080/api/tasks/${id}/complete`,{})
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem("userToken")}`
+  });
+    this.http.put(`http://localhost:8080/api/tasks/${id}/complete`,{headers: headers})
       .subscribe(()=>this.load());
   }
+
   approveTask(id:number){
-    this.http.put(`http://localhost:8080/api/tasks/${id}/approve`,{})
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem("userToken")}`
+  });
+    this.http.put(`http://localhost:8080/api/tasks/${id}/approve`,{headers: headers})
       .subscribe(()=>this.load());
   }
+
   rejectTask(id:number){
-    this.http.put(`http://localhost:8080/api/tasks/${id}/reject`,{})
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem("userToken")}`
+  });
+    this.http.put(`http://localhost:8080/api/tasks/${id}/reject`,{headers: headers})
       .subscribe(()=>this.load());
   }
 }

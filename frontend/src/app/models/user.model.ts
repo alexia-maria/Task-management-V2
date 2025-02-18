@@ -3,5 +3,6 @@ export interface User {
     username: string;
     role: string;
     familyId?: number;
+    accessToken?: string;
   }
   
