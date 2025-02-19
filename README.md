@@ -1,6 +1,6 @@
 # Task-management-V2
 
-An intuitive platform designed to help families track and complete tasks efficiently. Gamification techniques encourage engagement and productivity.
+Developed a system that helps families track and complete tasks through an intuitive interface, using gamification techniques to encourage task completion.
 
 # Key Features
 
